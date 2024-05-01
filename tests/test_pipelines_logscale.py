@@ -137,6 +137,24 @@ def test_cql_image_replace_disk_name():
         )
     ) == 'event_platform=/^Win$/i #event_simpleName=/^ProcessRollup2$/i CommandLine=/^test\\.exe foo bar$/i ImageFileName=/^\\\\Device\\\\HarddiskVolume.\\\\Windows\\\\System32\\\\cmd\\.exe$/i'
 
+def test_cql_image_replace_disk_name_colon():
+      assert (
+        LogScaleBackend(processing_pipeline=falcon_pipeline()).convert(
+           SigmaCollection.from_yaml(
+            """
+            title: Process Creation Test
+            status: test
+            logsource:
+                category: process_creation
+                product: windows
+            detection:
+                sel:
+                    CommandLine: "test.exe foo bar"
+                    Image|endswith: ":\\\\Windows\\\\System32\\\\cmd.exe"
+                condition: sel
+            """)
+        )
+    ) == 'event_platform=/^Win$/i #event_simpleName=/^ProcessRollup2$/i CommandLine=/^test\\.exe foo bar$/i ImageFileName=/\\\\Windows\\\\System32\\\\cmd\\.exe$/i'
 
 @pytest.mark.parametrize("field",unsupported_process_creation_fields)
 def test_cql_process_start_unsupported_field(field):
@@ -344,4 +362,4 @@ def test_cql_image_load_full_path():
                 condition: sel
             """)
         )
-    ) == '#event_simpleName=/^ClassifiedModuleLoad$/i event_platform=/^Win$/i ImageFileName=/^\\\\Device\\\\HarddiskVolume.\\\\Windows\\\\test\\.sys$/i TargetImageFileName=/^\\\\Device\\\\HarddiskVolume.\\\\Windows\\\\test\\.exe$/i SHA256HashData=/^test$/i MD5HashData=/^test$/i'
+    ) == '#event_simpleName=/^ClassifiedModuleLoad$/i event_platform=/^Win$/i ImageFileName=/^\\\\Device\\\\HarddiskVolume.\\\\Windows\\\\test\\.sys$/i TargetImageFileName=/^\\\\Device\\\\HarddiskVolume.\\\\Windows\\\\test\\.exe$/i SHA256HashData=/^test$/i MD5HashData=/^test$/i'W

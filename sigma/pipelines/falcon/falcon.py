@@ -496,6 +496,19 @@ def falcon_pipeline() -> ProcessingPipeline:
                 ],
                 field_name_condition_linking=any
             ),
+            #ImageFileName starting with colon handling
+            ProcessingItem(
+                identifier="cql_imagefilename_replace_disk_name",
+                transformation=ReplaceStringTransformation(
+                    regex=":",
+                    replacement=""
+                ),
+                field_name_conditions=[
+                    IncludeFieldCondition(fields=["ImageFileName"]),
+                    IncludeFieldCondition(fields=["TargetImageFileName"])
+                ],
+                field_name_condition_linking=any
+            ),
         ],
         finalizers=[ConcatenateQueriesFinalizer()],
     )
