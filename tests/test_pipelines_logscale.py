@@ -362,4 +362,4 @@ def test_cql_image_load_full_path():
                 condition: sel
             """)
         )
-    ) == '#event_simpleName=/^ClassifiedModuleLoad$/i event_platform=/^Win$/i ImageFileName=/^\\\\Device\\\\HarddiskVolume.\\\\Windows\\\\test\\.sys$/i TargetImageFileName=/^\\\\Device\\\\HarddiskVolume.\\\\Windows\\\\test\\.exe$/i SHA256HashData=/^test$/i MD5HashData=/^test$/i'W
+    ) == '#event_simpleName=/^ClassifiedModuleLoad$/i event_platform=/^Win$/i ImageFileName=/^\\\\Device\\\\HarddiskVolume.\\\\Windows\\\\test\\.sys$/i TargetImageFileName=/^\\\\Device\\\\HarddiskVolume.\\\\Windows\\\\test\\.exe$/i SHA256HashData=/^test$/i MD5HashData=/^test$/i'
